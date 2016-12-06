@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <script src="interact.min.js"></script>
+</head>
+<body >
+<script>
+    var liczby = [123,456,3123,345,123,564];
+    var div = [];
+    var array = [];
+
+    for(var i = 0; i < 6; i++){
+        div.push(document.createElement("div"));
+        div[i].className = "draggable";
+        div[i].style.name = "#box";
+        div[i].style.width = "100px";
+        div[i].style.height = "100px";
+        div[i].style.background = '#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6);
+        div[i].style.color = "black";
+        div[i].innerHTML = liczby[i];
+        document.getElementsByTagName('body')[0].appendChild(div[i]);
+    }
+    interact('.draggable')
+            .draggable({
+                inertia: true,
+                onmove: function(event){
+                    var target = event.target,
+                            x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
+                            y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+                    target.style.webkitTransform =
+                            target.style.transform =
+                                    'translate(' + x + 'px, ' + y + 'px)';
+                    target.setAttribute('data-x', x);
+                    target.setAttribute('data-y', y);
+                }
+            });
+
+
+</script>
+</body>
+</html>
